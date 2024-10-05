@@ -8,8 +8,14 @@ The system will be used to track and manage inventory for a small to medium-size
 The initial focus is on the Model, Service, and Database layers, 
 with data ingestion from the Controller layer simulated using simple data structures.
 
-## Functional Requirements
+### Focus
+* Backend service,model, and data layers
+* DB design
+* SQL DDL/DML
+* JPA implementation
+* Data processing
 
+## Functional Requirements
 ### Product Management
 
 * Add new products:  
