@@ -1,6 +1,5 @@
 package com.marcuslull;
 
-import com.marcuslull.entities.Product;
 import com.marcuslull.persistence.CustomPersistenceUnitInfo;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -17,8 +16,7 @@ public class Main {
         try {
             em.getTransaction().begin();
 
-            Product product = em.find(Product.class, "SKU123");
-            System.out.println(product);
+
 
 
             em.getTransaction().commit();
