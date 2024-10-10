@@ -15,13 +15,10 @@ import java.util.List;
 import java.util.Properties;
 
 /**
- * Custom implementation of the {@link PersistenceUnitInfo} interface used to provide
- * metadata about a persistence unit.
- * <p>
- * This class specifies configuration details for the JPA persistence unit such as the
- * persistence unit name, persistence provider class, data source class, server details,
- * authentication information, and database connection properties.
- * </p>
+ * CustomPersistenceUnitInfo provides configurations and settings for a specific
+ * JPA (Java Persistence API) persistence unit. It implements the PersistenceUnitInfo
+ * interface, offering methods to retrieve various properties and settings required
+ * for configuring a JPA persistence unit.
  */
 public class CustomPersistenceUnitInfo implements PersistenceUnitInfo {
 
@@ -92,10 +89,23 @@ public class CustomPersistenceUnitInfo implements PersistenceUnitInfo {
     public static final Integer DB_CONNECTION_MAX_LIFETIME = 300000; // 5 Minutes
 
     /**
+     * Defines the schema used for the database connection.
+     * This schema is typically used to isolate database objects (tables, sequences, etc.) within a database.
+     * The value "public" signifies that the schema used is the default schema provided by the database.
+     */
+    public static final String DB_SCHEMA = "public";
+
+    /**
      * A constant list of fully-qualified class names representing the entity classes
      * managed by the persistence unit.
      */
-    public static final List<String> MANAGED_CLASSES = List.of("com.marcuslull.entities.Product");
+    public static final List<String> MANAGED_CLASSES = List.of(
+            "com.marcuslull.entities.BaseEntity",
+            "com.marcuslull.entities.Category",
+            "com.marcuslull.entities.Note",
+            "com.marcuslull.entities.Price",
+            "com.marcuslull.entities.Product",
+            "com.marcuslull.entities.Supplier");
 
     /**
      * A configuration setting to enable or disable the display of SQL statements
@@ -158,7 +168,8 @@ public class CustomPersistenceUnitInfo implements PersistenceUnitInfo {
 
     /**
      * Retrieves the JTA-enabled DataSource for the current persistence unit configuration.
-     *
+     * This DataSource is <a href="https://github.com/brettwooldridge/HikariCP">Hikari Connection Pool</a>
+     * configured with the {@link Properties} class.
      * @return a DataSource object configured for JTA transactions
      */
     @Override
@@ -231,9 +242,15 @@ public class CustomPersistenceUnitInfo implements PersistenceUnitInfo {
     @Override
     public Properties getProperties() {
         Properties properties = new Properties(); // properties for Hibernate
+
+        // dev settings
         properties.setProperty(AvailableSettings.SHOW_SQL, HIBERNATE_SHOW_SQL);
         properties.setProperty(AvailableSettings.FORMAT_SQL, HIBERNATE_FORMAT_SQL);
         properties.setProperty(AvailableSettings.HIGHLIGHT_SQL, HIBERNATE_HIGHLIGHT_SQL);
+
+        // entity annotation simplification
+        properties.setProperty(AvailableSettings.DEFAULT_SCHEMA, DB_SCHEMA);
+
         return properties;
     }
 
