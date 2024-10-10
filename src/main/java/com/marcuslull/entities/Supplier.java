@@ -1,6 +1,7 @@
 package com.marcuslull.entities;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.NaturalId;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.util.LinkedHashSet;
@@ -13,14 +14,16 @@ import java.util.Set;
  * It extends BaseEntity and is mapped to the "suppliers" table in the public schema.
  */
 @Entity
-@Table(name = "suppliers", schema = "public")
+@Table(name = "suppliers")
 public class Supplier extends BaseEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "suppliers_id_gen")
     @SequenceGenerator(name = "suppliers_id_gen", sequenceName = "suppliers_supplier_id_seq", allocationSize = 1)
     @Column(name = "supplier_id", nullable = false)
     private Integer id;
 
+    @NaturalId
     @Column(name = "supplier_name", nullable = false, length = 50)
     private String supplierName;
 
@@ -116,8 +119,8 @@ public class Supplier extends BaseEntity {
         Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
         Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
         if (thisEffectiveClass != oEffectiveClass) return false;
-        Category category = (Category) o;
-        return getId() != null && Objects.equals(getId(), category.getId());
+        Supplier supplier = (Supplier) o;
+        return getId() != null && Objects.equals(getId(), supplier.getId());
     }
 
     @Override
@@ -133,9 +136,9 @@ public class Supplier extends BaseEntity {
                 ", website='" + website + '\'' +
                 ", representative='" + representative + '\'' +
                 ", phone='" + phone + '\'' +
-                ", products=" + products +
-                ", prices=" + prices +
-                ", notes=" + notes +
+                ", number of products=" + products.size() +
+                ", number of prices=" + prices.size() +
+                ", number of notes=" + notes.size() +
                 "} " + super.toString();
     }
 }

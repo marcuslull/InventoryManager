@@ -1,6 +1,7 @@
 package com.marcuslull.entities;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.NaturalId;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.util.LinkedHashSet;
@@ -13,14 +14,20 @@ import java.util.Set;
  * such as the category name, associated products, and associated notes.
  */
 @Entity
-@Table(name = "categories", schema = "public")
+// TODO: Declare indexing in the @Table annotation
+@Table(name = "categories")
 public class Category extends BaseEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "categories_id_gen")
     @SequenceGenerator(name = "categories_id_gen", sequenceName = "categories_category_id_seq", allocationSize = 1)
+    // TODO: Remove all nullable = false in favor of @NotNull from Hibernate Validator
+    // TODO: Define all @Column constraints
     @Column(name = "category_id", nullable = false)
     private Integer id;
 
+    // TODO: Create enum for this and add @Enumerated(STRING)
+    @NaturalId
     @Column(name = "category_name", nullable = false, length = 50)
     private String categoryName;
 
@@ -91,8 +98,8 @@ public class Category extends BaseEntity {
         return "Category{" +
                 "id=" + id +
                 ", categoryName='" + categoryName + '\'' +
-                ", products=" + products +
-                ", notes=" + notes +
+                ", number of products=" + products.size() +
+                ", number of notes=" + notes.size() +
                 "} " + super.toString();
     }
 }

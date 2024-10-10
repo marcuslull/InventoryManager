@@ -13,6 +13,7 @@ import java.time.Instant;
  */
 @MappedSuperclass()
 public abstract class BaseEntity {
+
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "created_at")
     protected Instant createdAt;
@@ -24,6 +25,10 @@ public abstract class BaseEntity {
     @ColumnDefault("false")
     @Column(name = "is_deleted")
     protected Boolean isDeleted;
+
+//    TODO: implement optimistic lock checking: https://docs.jboss.org/hibernate/orm/6.6/introduction/html_single/Hibernate_Introduction.html#entities
+//    @Version
+//    protected Integer version;
 
     public Instant getCreatedAt() {
         return createdAt;

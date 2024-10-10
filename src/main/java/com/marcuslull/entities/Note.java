@@ -13,8 +13,9 @@ import java.util.Objects;
  * It extends BaseEntity to include common fields for tracking creation and update timestamps.
  */
 @Entity
-@Table(name = "notes", schema = "public")
+@Table(name = "notes")
 public class Note extends BaseEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "notes_id_gen")
     @SequenceGenerator(name = "notes_id_gen", sequenceName = "notes_note_id_seq", allocationSize = 1)
@@ -26,17 +27,18 @@ public class Note extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "category_id")
+    // TODO: fill out the @JoinColumn members
+    @JoinColumn(name = "category_id", referencedColumnName = "category_id")
     private Category category;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "supplier_id")
+    @JoinColumn(name = "supplier_id", referencedColumnName = "supplier_id")
     private Supplier supplier;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "product_id", referencedColumnName = "product_id")
     private Product product;
 
     public Note() {

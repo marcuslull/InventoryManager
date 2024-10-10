@@ -2,6 +2,7 @@ package com.marcuslull.entities;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.NaturalId;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.math.BigDecimal;
@@ -16,16 +17,16 @@ import java.util.Set;
  * with categories, suppliers, prices, and notes.
  */
 @Entity
-@Table(name = "products", schema = "public", uniqueConstraints = {
-        @UniqueConstraint(name = "products_sku_key", columnNames = {"sku"})
-})
+@Table(name = "products", uniqueConstraints = {@UniqueConstraint(name = "products_sku_key", columnNames = {"sku"})})
 public class Product extends BaseEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "products_id_gen")
     @SequenceGenerator(name = "products_id_gen", sequenceName = "products_product_id_seq", allocationSize = 1)
     @Column(name = "product_id", nullable = false)
     private Integer id;
 
+    @NaturalId
     @Column(name = "sku", nullable = false, length = 20)
     private String sku;
 
@@ -171,10 +172,10 @@ public class Product extends BaseEntity {
                 ", threshold=" + threshold +
                 ", description='" + description + '\'' +
                 ", weight=" + weight +
-                ", categories=" + categories +
-                ", suppliers=" + suppliers +
-                ", prices=" + prices +
-                ", notes=" + notes +
+                ", num of categories=" + categories.size() +
+                ", num of suppliers=" + suppliers.size() +
+                ", num of prices=" + prices.size() +
+                ", num of notes=" + notes.size() +
                 "} " + super.toString();
     }
 }

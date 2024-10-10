@@ -13,8 +13,9 @@ import java.util.Objects;
  * This entity is mapped to the "price" table in the public schema of the database.
  */
 @Entity
-@Table(name = "price", schema = "public")
+@Table(name = "price")
 public class Price extends BaseEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "price_id_gen")
     @SequenceGenerator(name = "price_id_gen", sequenceName = "price_price_id_seq", allocationSize = 1)
@@ -26,12 +27,12 @@ public class Price extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "supplier_id", nullable = false)
+    @JoinColumn(name = "supplier_id", referencedColumnName = "supplier_id", nullable = false)
     private Supplier supplier;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "product_id", nullable = false)
+    @JoinColumn(name = "product_id", referencedColumnName = "product_id", nullable = false)
     private Product product;
 
     public Price() {
