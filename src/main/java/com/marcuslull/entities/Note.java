@@ -1,7 +1,7 @@
 package com.marcuslull.entities;
 
+import com.marcuslull.entities.validators.AtLeastOneNotNull;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -16,6 +16,7 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "notes")
+@AtLeastOneNotNull
 public class Note extends BaseEntity {
 
     @Id
@@ -29,7 +30,6 @@ public class Note extends BaseEntity {
     @Column(name = "note")
     private String note;
 
-    // TODO: annotate @NotNull for FKs OR
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "category_id", referencedColumnName = "category_id")
