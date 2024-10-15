@@ -1,6 +1,11 @@
 package com.marcuslull.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import org.hibernate.annotations.Check;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.NaturalId;
 import org.hibernate.proxy.HibernateProxy;
@@ -17,39 +22,47 @@ import java.util.Set;
  * with categories, suppliers, prices, and notes.
  */
 @Entity
-@Table(name = "products", uniqueConstraints = {@UniqueConstraint(name = "products_sku_key", columnNames = {"sku"})})
+@Table(name = "products")
 public class Product extends BaseEntity {
 
     @Id
+    @NotNull
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "products_id_gen")
     @SequenceGenerator(name = "products_id_gen", sequenceName = "products_product_id_seq", allocationSize = 1)
-    @Column(name = "product_id", nullable = false)
+    @Column(name = "product_id")
     private Integer id;
 
     @NaturalId
-    @Column(name = "sku", nullable = false, length = 20)
+    @NotNull
+    @Size(max = 20)
+    @Column(name = "sku", unique = true)
     private String sku;
 
-    @Column(name = "product_name", nullable = false, length = 50)
+    @NotNull
+    @Size(max = 50)
+    @Column(name = "product_name")
     private String productName;
 
+    @NotNull
     @ColumnDefault("0")
-    @Column(name = "quantity", nullable = false)
+    @Column(name = "quantity")
     private Integer quantity;
 
     @Column(name = "threshold")
+    @Check(constraints = "threshold >= 0")
     private Integer threshold;
 
-    @Column(name = "description", length = Integer.MAX_VALUE)
+    @Column(name = "description")
     private String description;
 
-    @Column(name = "weight", precision = 6, scale = 2)
+    @Digits(integer = 6, fraction = 2)
+    @Column(name = "weight")
     private BigDecimal weight;
 
-    @ManyToMany(mappedBy = "products")
+    @ManyToMany(mappedBy = "products", targetEntity = Category.class)
     private Set<Category> categories = new LinkedHashSet<>();
 
-    @ManyToMany(mappedBy = "products")
+    @ManyToMany(mappedBy = "products", targetEntity = Supplier.class)
     private Set<Supplier> suppliers = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "product", orphanRemoval = true)

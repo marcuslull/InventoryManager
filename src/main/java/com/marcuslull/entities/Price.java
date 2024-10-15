@@ -1,6 +1,8 @@
 package com.marcuslull.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.proxy.HibernateProxy;
@@ -17,22 +19,27 @@ import java.util.Objects;
 public class Price extends BaseEntity {
 
     @Id
+    @NotNull
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "price_id_gen")
     @SequenceGenerator(name = "price_id_gen", sequenceName = "price_price_id_seq", allocationSize = 1)
-    @Column(name = "price_id", nullable = false)
+    @Column(name = "price_id")
     private Integer id;
 
-    @Column(name = "price", nullable = false, precision = 7, scale = 2)
+    @NotNull
+    @Digits(integer = 7, fraction = 2)
+    @Column(name = "price")
     private BigDecimal price;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "supplier_id", referencedColumnName = "supplier_id", nullable = false)
+    @JoinColumn(name = "supplier_id", referencedColumnName = "supplier_id")
     private Supplier supplier;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "product_id", referencedColumnName = "product_id", nullable = false)
+    @JoinColumn(name = "product_id", referencedColumnName = "product_id")
     private Product product;
 
     public Price() {

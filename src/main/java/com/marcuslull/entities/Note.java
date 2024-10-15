@@ -1,6 +1,8 @@
 package com.marcuslull.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.proxy.HibernateProxy;
@@ -17,17 +19,19 @@ import java.util.Objects;
 public class Note extends BaseEntity {
 
     @Id
+    @NotNull
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "notes_id_gen")
     @SequenceGenerator(name = "notes_id_gen", sequenceName = "notes_note_id_seq", allocationSize = 1)
-    @Column(name = "note_id", nullable = false)
+    @Column(name = "note_id")
     private Integer id;
 
-    @Column(name = "note", nullable = false, length = Integer.MAX_VALUE)
+    @NotNull
+    @Column(name = "note")
     private String note;
 
+    // TODO: annotate @NotNull for FKs OR
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    // TODO: fill out the @JoinColumn members
     @JoinColumn(name = "category_id", referencedColumnName = "category_id")
     private Category category;
 

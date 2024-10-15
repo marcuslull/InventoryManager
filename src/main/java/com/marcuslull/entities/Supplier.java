@@ -1,6 +1,8 @@
 package com.marcuslull.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.NaturalId;
 import org.hibernate.proxy.HibernateProxy;
 
@@ -18,28 +20,36 @@ import java.util.Set;
 public class Supplier extends BaseEntity {
 
     @Id
+    @NotNull
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "suppliers_id_gen")
     @SequenceGenerator(name = "suppliers_id_gen", sequenceName = "suppliers_supplier_id_seq", allocationSize = 1)
-    @Column(name = "supplier_id", nullable = false)
+    @Column(name = "supplier_id")
     private Integer id;
 
     @NaturalId
-    @Column(name = "supplier_name", nullable = false, length = 50)
+    @Size(max = 50)
+    @NotNull
+    @Column(name = "supplier_name")
     private String supplierName;
 
-    @Column(name = "website", nullable = false, length = 200)
+    @Size(max = 200)
+    @NotNull
+    @Column(name = "website")
     private String website;
 
-    @Column(name = "representative", length = 50)
+    @Size(max = 50)
+    @Column(name = "representative")
     private String representative;
 
-    @Column(name = "phone", nullable = false, length = 15)
+    @Size(max = 15)
+    @NotNull
+    @Column(name = "phone")
     private String phone;
 
     @ManyToMany
     @JoinTable(name = "products_suppliers",
-            joinColumns = @JoinColumn(name = "suppliers_supplier_id"),
-            inverseJoinColumns = @JoinColumn(name = "products_product_id"))
+            joinColumns = @JoinColumn(name = "suppliers_supplier_id", table = "suppliers"),
+            inverseJoinColumns = @JoinColumn(name = "products_product_id", table = "products"))
     private Set<Product> products = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "supplier", orphanRemoval = true)

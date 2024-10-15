@@ -1,6 +1,9 @@
 package com.marcuslull.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.NaturalId;
 import org.hibernate.proxy.HibernateProxy;
 
@@ -19,22 +22,23 @@ import java.util.Set;
 public class Category extends BaseEntity {
 
     @Id
+    @NotNull
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "categories_id_gen")
     @SequenceGenerator(name = "categories_id_gen", sequenceName = "categories_category_id_seq", allocationSize = 1)
-    // TODO: Remove all nullable = false in favor of @NotNull from Hibernate Validator
-    // TODO: Define all @Column constraints
-    @Column(name = "category_id", nullable = false)
+    @Column(name = "category_id")
     private Integer id;
 
     // TODO: Create enum for this and add @Enumerated(STRING)
     @NaturalId
-    @Column(name = "category_name", nullable = false, length = 50)
+    @NotNull
+    @Size(max = 50)
+    @Column(name = "category_name")
     private String categoryName;
 
     @ManyToMany
     @JoinTable(name = "products_categories",
-            joinColumns = @JoinColumn(name = "categories_category_id"),
-            inverseJoinColumns = @JoinColumn(name = "products_product_id"))
+            joinColumns = @JoinColumn(name = "categories_category_id", table = "categories"),
+            inverseJoinColumns = @JoinColumn(name = "products_product_id", table = "products"))
     private Set<Product> products = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "category", orphanRemoval = true)
