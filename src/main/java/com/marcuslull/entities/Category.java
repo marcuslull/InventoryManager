@@ -1,5 +1,6 @@
 package com.marcuslull.entities;
 
+import com.marcuslull.entities.enumerations.Categories;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
@@ -28,12 +29,12 @@ public class Category extends BaseEntity {
     @Column(name = "category_id")
     private Integer id;
 
-    // TODO: Create enum for this and add @Enumerated(STRING)
+    @Enumerated(EnumType.STRING)
     @NaturalId
     @NotNull
     @Size(max = 50)
     @Column(name = "category_name")
-    private String categoryName;
+    private Categories categoryName;
 
     @ManyToMany
     @JoinTable(name = "products_categories",
@@ -57,11 +58,11 @@ public class Category extends BaseEntity {
         this.id = id;
     }
 
-    public String getCategoryName() {
+    public Categories getCategoryName() {
         return categoryName;
     }
 
-    public void setCategoryName(String categoryName) {
+    public void setCategoryName(Categories categoryName) {
         this.categoryName = categoryName;
     }
 

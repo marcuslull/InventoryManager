@@ -1,9 +1,16 @@
 
 -- Inserting test data for categories
 INSERT INTO public.categories (category_name)
-VALUES ('Category 1'),
-       ('Category 2'),
-       ('Category 3');
+VALUES ('ELECTRONICS'),
+       ('CLOTHING'),
+       ('BOOKS'),
+       ('HOME_GOODS'),
+       ('SPORTS_AND_OUTDOORS'),
+       ('BEAUTY_AND_PERSONAL_CARE'),
+       ('HEALTH_AND_WELLNESS'),
+       ('GROCERY'),
+       ('AUTOMOTIVE'),
+       ('TOYS_AND_GAMES');
 
 
 
