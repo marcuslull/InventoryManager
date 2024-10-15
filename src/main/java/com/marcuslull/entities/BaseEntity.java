@@ -1,12 +1,9 @@
 package com.marcuslull.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.MappedSuperclass;
-import jakarta.persistence.Version;
+import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.Instant;
-
 
 /**
  * BaseEntity is an abstract base class that provides common properties for
@@ -32,6 +29,18 @@ public abstract class BaseEntity {
     @Column(name = "version")
     @ColumnDefault("0")
     protected Integer version;
+
+    @PrePersist
+    protected void prePersist() {
+        this.createdAt = Instant.now();
+        this.updatedAt = Instant.now();
+        this.isDeleted = false;
+    }
+
+    @PreUpdate
+    protected void preUpdate() {
+        this.updatedAt = Instant.now();
+    }
 
     public Instant getCreatedAt() {
         return createdAt;

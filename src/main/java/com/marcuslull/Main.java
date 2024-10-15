@@ -20,24 +20,32 @@ public class Main {
         try {
             transaction.begin();
 
-            Product product = entityManager.find(Product.class, 1);
-            System.out.println("Product from product: " + product);
-            product.getCategories().forEach(category -> System.out.println("Category from product: " + category));
-            product.getSuppliers().forEach(supplier -> System.out.println("Supplier from product: " + supplier));
-            product.getPrices().forEach(price -> System.out.println("Price from product: " + price));
-            product.getNotes().forEach(note -> System.out.println("Note from product: " + note));
+//            Product product = entityManager.find(Product.class, 1);
+//            System.out.println("Product from product: " + product);
+//            product.getCategories().forEach(category -> System.out.println("Category from product: " + category));
+//            product.getSuppliers().forEach(supplier -> System.out.println("Supplier from product: " + supplier));
+//            product.getPrices().forEach(price -> System.out.println("Price from product: " + price));
+//            product.getNotes().forEach(note -> System.out.println("Note from product: " + note));
+//
+//            Category category = entityManager.find(Category.class, 1);
+//            System.out.println("Category from category: " + category);
+//
+//            Supplier supplier = entityManager.find(Supplier.class, 1);
+//            System.out.println("Supplier from supplier: " + supplier);
+//
+//            Price price = entityManager.find(Price.class, 1);
+//            System.out.println("Price from price: " + price);
+//
+//            Note note = entityManager.find(Note.class, 1);
+//            System.out.println("Note from note: " + note);
 
-            Category category = entityManager.find(Category.class, 1);
-            System.out.println("Category from category: " + category);
+            Supplier supplier = new Supplier();
+            supplier.setSupplierName("Some Supplier");
+            supplier.setPhone("555-555-5555");
+            supplier.setWebsite("www.somewebsite.com");
+            supplier.setRepresentative("Some Representative");
 
-            Supplier supplier = entityManager.find(Supplier.class, 1);
-            System.out.println("Supplier from supplier: " + supplier);
-
-            Price price = entityManager.find(Price.class, 1);
-            System.out.println("Price from price: " + price);
-
-            Note note = entityManager.find(Note.class, 1);
-            System.out.println("Note from note: " + note);
+            entityManager.persist(supplier);
 
             entityManager.getTransaction().commit();
         }
