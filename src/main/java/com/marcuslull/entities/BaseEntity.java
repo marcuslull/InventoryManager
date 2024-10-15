@@ -2,14 +2,16 @@ package com.marcuslull.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.Version;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.Instant;
 
+
 /**
- * BaseEntity serves as a base class for all entities in the application, providing common
- * fields and methods for tracking creation and update timestamps, as well as a logical
- * deletion flag.
+ * BaseEntity is an abstract base class that provides common properties for
+ * entities such as creation time, update time, deletion status, and version control.
+ * It is designed to be extended by other entity classes to inherit these properties.
  */
 @MappedSuperclass()
 public abstract class BaseEntity {
@@ -26,9 +28,10 @@ public abstract class BaseEntity {
     @Column(name = "is_deleted")
     protected Boolean isDeleted;
 
-//    TODO: implement optimistic lock checking: https://docs.jboss.org/hibernate/orm/6.6/introduction/html_single/Hibernate_Introduction.html#entities
-//    @Version
-//    protected Integer version;
+    @Version
+    @Column(name = "version")
+    @ColumnDefault("0")
+    protected Integer version;
 
     public Instant getCreatedAt() {
         return createdAt;
@@ -54,12 +57,21 @@ public abstract class BaseEntity {
         this.isDeleted = isDeleted;
     }
 
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
+
     @Override
     public String toString() {
         return "BaseEntity{" +
                 "createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 ", isDeleted=" + isDeleted +
+                ", version=" + version +
                 '}';
     }
 }

@@ -73,6 +73,7 @@ CREATE TABLE IF NOT EXISTS public.categories
     created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
     updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
     is_deleted boolean DEFAULT false,
+    version integer DEFAULT 0,
     CONSTRAINT categories_pkey PRIMARY KEY (category_id)
 );
 
@@ -86,6 +87,7 @@ CREATE TABLE IF NOT EXISTS public.notes
     created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
     updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
     is_deleted boolean DEFAULT false,
+    version integer DEFAULT 0,
     CONSTRAINT notes_pkey PRIMARY KEY (note_id),
 	CONSTRAINT notes_at_least_one_id_required CHECK (category_id IS NOT NULL OR supplier_id IS NOT NULL OR product_id IS NOT NULL)
 );
@@ -99,6 +101,7 @@ CREATE TABLE IF NOT EXISTS public.price
     created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
     updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
     is_deleted boolean DEFAULT false,
+    version integer DEFAULT 0,
     CONSTRAINT price_pkey PRIMARY KEY (price_id)
 );
 
@@ -114,9 +117,24 @@ CREATE TABLE IF NOT EXISTS public.products
     created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
     updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
     is_deleted boolean DEFAULT false,
+    version integer DEFAULT 0,
     CONSTRAINT products_pkey PRIMARY KEY (product_id),
     CONSTRAINT products_sku_key UNIQUE (sku),
 	CONSTRAINT products_positive_threshold CHECK (threshold > 0)
+);
+
+CREATE TABLE IF NOT EXISTS public.suppliers
+(
+    supplier_id serial NOT NULL,
+    supplier_name character varying(50) NOT NULL,
+    website character varying(200) NOT NULL,
+    representative character varying(50),
+    phone character varying(15) NOT NULL,
+    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    is_deleted boolean DEFAULT false,
+    version integer DEFAULT 0,
+    CONSTRAINT suppliers_pkey PRIMARY KEY (supplier_id)
 );
 
 CREATE TABLE IF NOT EXISTS public.products_categories
@@ -131,19 +149,6 @@ CREATE TABLE IF NOT EXISTS public.products_suppliers
     suppliers_supplier_id integer NOT NULL,
     products_product_id integer NOT NULL,
 	CONSTRAINT products_suppliers_pkey PRIMARY KEY (suppliers_supplier_id, products_product_id)
-);
-
-CREATE TABLE IF NOT EXISTS public.suppliers
-(
-    supplier_id serial NOT NULL,
-    supplier_name character varying(50) NOT NULL,
-    website character varying(200) NOT NULL,
-    representative character varying(50),
-    phone character varying(15) NOT NULL,
-    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    is_deleted boolean DEFAULT false,
-    CONSTRAINT suppliers_pkey PRIMARY KEY (supplier_id)
 );
 
 
