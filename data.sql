@@ -60,7 +60,8 @@ VALUES ('Note 1 for Product 1', 1, 1, 1),
        ('General Note 3 for Category 3 from Supplier 3', NULL, 3, 3),
        ('Product Note for SKU123 in Category 2', 1, 2, NULL),
        ('Product Note for SKU124 in Category 3', 2, 3, NULL),
-       ('Product Note for SKU125 in Category 1', 3, 1, NULL);
+       ('Product Note for SKU125 in Category 1', 3, 1, NULL),
+       ('This note should be deleted', 1, NULL, NULL);
 
 
 

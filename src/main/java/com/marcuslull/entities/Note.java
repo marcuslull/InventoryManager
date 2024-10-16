@@ -50,6 +50,9 @@ public class Note extends BaseEntity {
 
     public Note(String note) {}
 
+    // TODO: create a shouldBeDeleted method that returns true if a given FK is the only one set
+    // TODO: this simplifies removal of notes to avoid @AtLeastOneNotNull constraint violations
+
     public Integer getId() {
         return id;
     }

@@ -7,6 +7,11 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 
+import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 
 public class Main {
     public static void main(String[] args) {
@@ -19,6 +24,8 @@ public class Main {
 
         try {
             transaction.begin();
+
+            // READ TEST
 
 //            Product product = entityManager.find(Product.class, 1);
 //            System.out.println("Product from product: " + product);
@@ -39,13 +46,68 @@ public class Main {
 //            Note note = entityManager.find(Note.class, 1);
 //            System.out.println("Note from note: " + note);
 
-            Supplier supplier = new Supplier();
-            supplier.setSupplierName("Some Supplier");
-            supplier.setPhone("555-555-5555");
-            supplier.setWebsite("www.somewebsite.com");
-            supplier.setRepresentative("Some Representative");
 
-            entityManager.persist(supplier);
+            // WRITE TEST
+
+//            Product product = new Product();
+//            product.setProductName("Some Product");
+//            product.setSku("123456789");
+//            product.setQuantity(50);
+//            product.setDescription("Some Description");
+//            product.setWeight(BigDecimal.valueOf(2.5));
+//
+//            Supplier supplier = new Supplier();
+//            supplier.setSupplierName("Some Supplier");
+//            supplier.setPhone("555-555-5555");
+//            supplier.setWebsite("www.somewebsite.com");
+//            supplier.setRepresentative("Some Representative");
+//
+//            Category category = entityManager.find(Category.class, 1);
+//
+//            Note note = new Note();
+//            note.setNote("Some note about Some Product");
+//
+//            Price price = new Price();
+//            price.setPrice(BigDecimal.valueOf(.01));
+//
+//            product.getSuppliers().add(supplier);
+//            product.getCategories().add(category);
+//            product.getNotes().add(note);
+//            product.getPrices().add(price);
+//
+//            supplier.getProducts().add(product);
+//            supplier.getPrices().add(price);
+//
+//            category.getProducts().add(product);
+//
+//            note.setProduct(product);
+//
+//            price.setProduct(product);
+//            price.setSupplier(supplier);
+//
+//            entityManager.persist(product);
+//            entityManager.persist(supplier);
+//            entityManager.persist(category);
+//            entityManager.persist(note);
+//            entityManager.persist(price);
+
+            // UPDATE TEST
+
+//            Product product = entityManager.find(Product.class, 1);
+//            product.setDescription("An updated description");
+//            product.getCategories().forEach(category -> category.getProducts().remove(product));
+//            product.getSuppliers().forEach(supplier -> supplier.getProducts().remove(product));
+//            product.getNotes().forEach(note -> {
+//                Note noteEntity = entityManager.find(Note.class, note.getId());
+//                if (noteEntity.getCategory() == null || noteEntity.getSupplier() == null) {
+//                    entityManager.remove(noteEntity);
+//                }
+//                else {
+//                    noteEntity.setProduct(null);
+//                    entityManager.merge(noteEntity);
+//                }
+//            });
+//            entityManager.merge(product);
 
             entityManager.getTransaction().commit();
         }
