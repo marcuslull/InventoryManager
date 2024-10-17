@@ -1,16 +1,11 @@
 package com.marcuslull;
 
-import com.marcuslull.entities.*;
+import com.marcuslull.entities.Product;
 import com.marcuslull.persistence.CustomPersistenceUnitInfo;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import org.hibernate.jpa.HibernatePersistenceProvider;
-
-import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 
 public class Main {
@@ -93,21 +88,20 @@ public class Main {
 
             // UPDATE TEST
 
-//            Product product = entityManager.find(Product.class, 1);
-//            product.setDescription("An updated description");
-//            product.getCategories().forEach(category -> category.getProducts().remove(product));
-//            product.getSuppliers().forEach(supplier -> supplier.getProducts().remove(product));
-//            product.getNotes().forEach(note -> {
-//                Note noteEntity = entityManager.find(Note.class, note.getId());
-//                if (noteEntity.getCategory() == null || noteEntity.getSupplier() == null) {
-//                    entityManager.remove(noteEntity);
-//                }
-//                else {
-//                    noteEntity.setProduct(null);
-//                    entityManager.merge(noteEntity);
-//                }
-//            });
-//            entityManager.merge(product);
+            Product product = entityManager.find(Product.class, 1);
+            product.setDescription("An updated description");
+            product.getCategories().forEach(category -> category.getProducts().remove(product));
+            product.getSuppliers().forEach(supplier -> supplier.getProducts().remove(product));
+            product.getNotes().forEach(note -> {
+                if (note.foreignKeyRemovalWillViolateConstraint(Product.class)) {
+                    entityManager.remove(note);
+                }
+                else {
+                    note.setProduct(null);
+                    entityManager.merge(note);
+                }
+            });
+            entityManager.merge(product);
 
             entityManager.getTransaction().commit();
         }

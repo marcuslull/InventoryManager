@@ -1,6 +1,7 @@
 package com.marcuslull.entities;
 
 import com.marcuslull.entities.enumerations.Categories;
+import com.marcuslull.entities.interfaces.NotedEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -19,7 +20,7 @@ import java.util.Set;
 @Entity
 // TODO: Declare indexing in the @Table annotation
 @Table(name = "categories")
-public class Category extends BaseEntity {
+public class Category extends BaseEntity implements NotedEntity {
 
     @Id
     @NotNull
@@ -39,10 +40,10 @@ public class Category extends BaseEntity {
     @JoinTable(name = "products_categories",
             joinColumns = @JoinColumn(name = "categories_category_id", table = "categories"),
             inverseJoinColumns = @JoinColumn(name = "products_product_id", table = "products"))
-    private Set<Product> products = new LinkedHashSet<>();
+    private Set<@NotNull Product> products = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "category", orphanRemoval = true)
-    private Set<Note> notes = new LinkedHashSet<>();
+    private Set<@NotNull Note> notes = new LinkedHashSet<>();
 
     public Category() {
     }

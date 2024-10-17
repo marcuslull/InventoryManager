@@ -1,5 +1,6 @@
 package com.marcuslull.entities;
 
+import com.marcuslull.entities.interfaces.NotedEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotNull;
@@ -22,7 +23,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "products")
-public class Product extends BaseEntity {
+public class Product extends BaseEntity implements NotedEntity {
 
     @Id
     @NotNull
@@ -59,16 +60,16 @@ public class Product extends BaseEntity {
     private BigDecimal weight;
 
     @ManyToMany(mappedBy = "products", targetEntity = Category.class)
-    private Set<Category> categories = new LinkedHashSet<>();
+    private Set<@NotNull Category> categories = new LinkedHashSet<>();
 
     @ManyToMany(mappedBy = "products", targetEntity = Supplier.class)
-    private Set<Supplier> suppliers = new LinkedHashSet<>();
+    private Set<@NotNull Supplier> suppliers = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "product", orphanRemoval = true)
-    private Set<Price> prices = new LinkedHashSet<>();
+    private Set<@NotNull Price> prices = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "product", orphanRemoval = true)
-    private Set<Note> notes = new LinkedHashSet<>();
+    private Set<@NotNull Note> notes = new LinkedHashSet<>();
 
     public Integer getId() {
         return id;

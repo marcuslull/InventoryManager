@@ -1,5 +1,6 @@
-package com.marcuslull.entities.validators;
+package com.marcuslull.entities.annotations;
 
+import com.marcuslull.entities.validators.NoteNullForeignKeyValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 

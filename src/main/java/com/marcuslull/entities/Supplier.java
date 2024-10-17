@@ -1,5 +1,6 @@
 package com.marcuslull.entities;
 
+import com.marcuslull.entities.interfaces.NotedEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -17,7 +18,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "suppliers")
-public class Supplier extends BaseEntity {
+public class Supplier extends BaseEntity implements NotedEntity {
 
     @Id
     @NotNull
@@ -50,13 +51,13 @@ public class Supplier extends BaseEntity {
     @JoinTable(name = "products_suppliers",
             joinColumns = @JoinColumn(name = "suppliers_supplier_id", table = "suppliers"),
             inverseJoinColumns = @JoinColumn(name = "products_product_id", table = "products"))
-    private Set<Product> products = new LinkedHashSet<>();
+    private Set<@NotNull Product> products = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "supplier", orphanRemoval = true)
-    private Set<Price> prices = new LinkedHashSet<>();
+    private Set<@NotNull Price> prices = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "supplier", orphanRemoval = true)
-    private Set<Note> notes = new LinkedHashSet<>();
+    private Set<@NotNull Note> notes = new LinkedHashSet<>();
 
     public Integer getId() {
         return id;
