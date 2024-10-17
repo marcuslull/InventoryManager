@@ -157,21 +157,21 @@ ALTER TABLE IF EXISTS public.notes
     ADD CONSTRAINT notes_category_id_fkey FOREIGN KEY (category_id)
     REFERENCES public.categories (category_id) MATCH SIMPLE
     ON UPDATE NO ACTION
-    ON DELETE CASCADE;
+    ON DELETE NO ACTION;
 
 
 ALTER TABLE IF EXISTS public.notes
     ADD CONSTRAINT notes_product_id_fkey FOREIGN KEY (product_id)
     REFERENCES public.products (product_id) MATCH SIMPLE
     ON UPDATE NO ACTION
-    ON DELETE CASCADE;
+    ON DELETE NO ACTION;
 
 
 ALTER TABLE IF EXISTS public.notes
     ADD CONSTRAINT notes_supplier_id_fkey FOREIGN KEY (supplier_id)
     REFERENCES public.suppliers (supplier_id) MATCH SIMPLE
     ON UPDATE NO ACTION
-    ON DELETE CASCADE;
+    ON DELETE NO ACTION;
 
 
 ALTER TABLE IF EXISTS public.price
