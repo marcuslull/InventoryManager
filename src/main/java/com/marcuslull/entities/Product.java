@@ -1,6 +1,5 @@
 package com.marcuslull.entities;
 
-import com.marcuslull.entities.interfaces.NotedEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotNull;
@@ -23,7 +22,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "products")
-public class Product extends BaseEntity implements NotedEntity {
+public class Product extends BaseEntity {
 
     @Id
     @NotNull

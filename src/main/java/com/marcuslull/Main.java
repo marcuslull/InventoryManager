@@ -1,6 +1,7 @@
 package com.marcuslull;
 
 import com.marcuslull.entities.Product;
+import com.marcuslull.entities.validators.ValidationChecker;
 import com.marcuslull.persistence.CustomPersistenceUnitInfo;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -93,13 +94,9 @@ public class Main {
             product.getCategories().forEach(category -> category.getProducts().remove(product));
             product.getSuppliers().forEach(supplier -> supplier.getProducts().remove(product));
             product.getNotes().forEach(note -> {
-                if (note.foreignKeyRemovalWillViolateConstraint(Product.class)) {
-                    entityManager.remove(note);
-                }
-                else {
-                    note.setProduct(null);
-                    entityManager.merge(note);
-                }
+                note.setProduct(null);
+                if (ValidationChecker.isValidEntity(note)) entityManager.merge(note);
+                else entityManager.remove(note);
             });
             entityManager.merge(product);
 

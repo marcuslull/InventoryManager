@@ -1,10 +1,8 @@
 package com.marcuslull.entities;
 
 import com.marcuslull.entities.enumerations.Categories;
-import com.marcuslull.entities.interfaces.NotedEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.NaturalId;
 import org.hibernate.proxy.HibernateProxy;
 
@@ -20,7 +18,7 @@ import java.util.Set;
 @Entity
 // TODO: Declare indexing in the @Table annotation
 @Table(name = "categories")
-public class Category extends BaseEntity implements NotedEntity {
+public class Category extends BaseEntity {
 
     @Id
     @NotNull
@@ -32,7 +30,6 @@ public class Category extends BaseEntity implements NotedEntity {
     @Enumerated(EnumType.STRING)
     @NaturalId
     @NotNull
-    @Size(max = 50)
     @Column(name = "category_name")
     private Categories categoryName;
 

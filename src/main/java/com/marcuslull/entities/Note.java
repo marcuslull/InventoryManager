@@ -1,7 +1,6 @@
 package com.marcuslull.entities;
 
 import com.marcuslull.entities.annotations.AtLeastOneNotNull;
-import com.marcuslull.entities.interfaces.NotedEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.OnDelete;
@@ -50,23 +49,6 @@ public class Note extends BaseEntity {
     }
 
     public Note(String note) {}
-
-    /**
-     * Checks if the removal of a foreign key relationship related to a given entity class
-     * will violate the entity's integrity constraints.
-     *
-     * @param entityClass the class object of the foreign key relationship to check against
-     * @return true if removing the foreign key relationship will leave the entity in a state that
-     *         violates its constraints, otherwise false
-     */
-    public boolean foreignKeyRemovalWillViolateConstraint(Class<? extends NotedEntity> entityClass) {
-        return switch (entityClass.getSimpleName()) {
-            case "Category" -> this.supplier == null && this.product == null;
-            case "Supplier" -> this.category == null && this.product == null;
-            case "Product" -> this.category == null && this.supplier == null;
-            default -> false;
-        };
-    }
 
     public Integer getId() {
         return id;

@@ -1,6 +1,5 @@
 package com.marcuslull.entities;
 
-import com.marcuslull.entities.interfaces.NotedEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -18,7 +17,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "suppliers")
-public class Supplier extends BaseEntity implements NotedEntity {
+public class Supplier extends BaseEntity {
 
     @Id
     @NotNull
