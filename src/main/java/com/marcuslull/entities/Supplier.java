@@ -55,7 +55,7 @@ public class Supplier extends BaseEntity {
     @OneToMany(mappedBy = "supplier", orphanRemoval = true)
     private Set<@NotNull Price> prices = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "supplier", orphanRemoval = true)
+    @OneToMany(mappedBy = "supplier")
     private Set<@NotNull Note> notes = new LinkedHashSet<>();
 
     public Integer getId() {

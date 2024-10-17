@@ -67,7 +67,7 @@ public class Product extends BaseEntity {
     @OneToMany(mappedBy = "product", orphanRemoval = true)
     private Set<@NotNull Price> prices = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "product", orphanRemoval = true)
+    @OneToMany(mappedBy = "product")
     private Set<@NotNull Note> notes = new LinkedHashSet<>();
 
     public Integer getId() {

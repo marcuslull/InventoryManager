@@ -1,6 +1,7 @@
 package com.marcuslull.entities;
 
 import com.marcuslull.entities.enumerations.Categories;
+import com.marcuslull.entities.validators.ValidationChecker;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.NaturalId;
@@ -39,7 +40,7 @@ public class Category extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "products_product_id", table = "products"))
     private Set<@NotNull Product> products = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "category", orphanRemoval = true)
+    @OneToMany(mappedBy = "category")
     private Set<@NotNull Note> notes = new LinkedHashSet<>();
 
     public Category() {
